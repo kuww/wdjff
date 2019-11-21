@@ -1,18 +1,11 @@
-# umi-plugin-block
-
-[![NPM version](https://img.shields.io/npm/v/umi-plugin-block.svg?style=flat)](https://npmjs.org/package/umi-plugin-block)
-[![NPM downloads](http://img.shields.io/npm/dm/umi-plugin-block.svg?style=flat)](https://npmjs.org/package/umi-plugin-block)
-
-block块开发
-
-## Usage
-
-Configure in `.umirc.js`,
+block块插入  
+前端微服务
+我打业务插件
 
 ```js
 export default {
   plugins: [
-    ['umi-plugin-block', options],
+    ['wdjff', options],
   ],
 }
 ```

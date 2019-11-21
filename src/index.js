@@ -26,7 +26,7 @@ const chalk = require('chalk');
 const getPath = (path) => join(__dirname, path);
 const mkdirSync = util.promisify(fs.mkdir);
 const accessSync = util.promisify(fs.access);
-const rootWorkDir = path.normalize(path.join(__dirname, '../../../'));
+const rootWorkDir = path.normalize(path.join(__dirname, '../../'));
 
 /** 获取当前时间
  * @example 2019-7-11 17:11:54
