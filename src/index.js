@@ -120,9 +120,9 @@ function syncRunCommand(command, options, strict) {
 
 
 var adds = async function (src, routerUrl,branch="master") {
-  const dst = getPath('../../src/pages');
+  const dst = getPath('../../../src/pages');
   console.log(dst,">>>>>>>>>>")
-  const routerConfig = getPath('../../src/spec_routes/block.js')
+  const routerConfig = getPath('../../../src/spec_routes/block.js')
   console.log(routerConfig,"<<<<<<<<<<<")
   if (src.indexOf('http') === 0) {
     const dirForCloneResource = `${rootWorkDir}clone`;
