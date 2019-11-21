@@ -279,11 +279,9 @@ var adds = async function (src, routerUrl,branch="master") {
 }
 
 
-adds()
-
-// export default (in_api, in_opts = {}) => {
-//   let { api, opts } = defaultPluginCore(in_api, in_opts);
-//   if(opts.cloneUrl){
-//     adds(opts.cloneUrl,opts.routerUrl,opts.branch)
-//   }
-// };
+export default (in_api, in_opts = {}) => {
+  let { api, opts } = defaultPluginCore(in_api, in_opts);
+  if(opts.cloneUrl){
+    adds(opts.cloneUrl,opts.routerUrl,opts.branch)
+  }
+};
