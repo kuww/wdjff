@@ -158,7 +158,7 @@ var adds = async function (src, routerUrl,branch="master") {
     }else{
       let strs = data;
       let arrs = strs.split('export default');
-      strs = arrs[0]+"\nimport blcok from './block';\nexport default"+arrs[1];
+      strs = arrs[0]+"\nimport block from './block';\nexport default"+arrs[1];
       arrs = strs.split('children: [');
       strs = arrs[0]+'children: [\n...block,\n'+arrs[1];
       fs.writeFile(allrouterConfig,strs,function () {
