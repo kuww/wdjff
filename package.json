@@ -1,0 +1,28 @@
+{
+  "name": "wdjff",
+  "version": "1.0.0",
+  "description": "",
+  "main": "lib/index.js",
+  "author": "luzz",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^3.0.0",
+    "execa": "^3.3.0",
+    "fs-extra": "^8.1.0"
+  },
+  "peerDependencies": {
+    "umi": "2.x"
+  },
+  "scripts": {
+    "build": "umi-tools build",
+    "prepublishOnly": "npm run build && np --no-cleanup --yolo --no-publish"
+  },
+  "devDependencies": {
+    "umi-tools": "*",
+    "np": "^3.0.4"
+  },
+  "files": [
+    "lib",
+    "src"
+  ]
+}
