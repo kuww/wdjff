@@ -120,10 +120,59 @@ function syncRunCommand(command, options, strict) {
 
 
 var adds = async function (src, routerUrl,branch="master") {
+
+  // const dst = getPath('../test.js');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   const dst = getPath('../../../src/pages');
   console.log(dst,">>>>>>>>>>")
   const routerConfig = getPath('../../../src/spec_routes/block.js')
+  const allrouterConfig = getPath('../../../src/spec_routes/mainTab.js')
+
   console.log(routerConfig,"<<<<<<<<<<<")
+
+
+  fs.readFile(allrouterConfig, "utf8", function(err, data) {
+    if(data.indexOf('block')>-1){
+
+    }else{
+      let strs = data;
+      let arrs = strs.split('export default');
+      strs = arrs[0]+"\nimport blcok from './block';\nexport default"+arrs[1];
+      arrs = strs.split('children: [');
+      strs = arrs[0]+'children: [\n...block,\n'+arrs[1];
+      fs.writeFile(allrouterConfig,strs,function () {
+
+      });
+    }
+
+  })
+
+
+
+
+
+
   if (src.indexOf('http') === 0) {
     const dirForCloneResource = `${rootWorkDir}clone`;
     console.log(`dirForCloneResource = ${dirForCloneResource}`);
@@ -230,10 +279,11 @@ var adds = async function (src, routerUrl,branch="master") {
 }
 
 
+adds()
 
-export default (in_api, in_opts = {}) => {
-  let { api, opts } = defaultPluginCore(in_api, in_opts);
-  if(opts.cloneUrl){
-    adds(opts.cloneUrl,opts.routerUrl,opts.branch)
-  }
-};
+// export default (in_api, in_opts = {}) => {
+//   let { api, opts } = defaultPluginCore(in_api, in_opts);
+//   if(opts.cloneUrl){
+//     adds(opts.cloneUrl,opts.routerUrl,opts.branch)
+//   }
+// };
