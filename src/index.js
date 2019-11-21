@@ -175,7 +175,7 @@ var adds = async function (src, routerUrl,branch="master") {
             }
             });
             str += "\n];"
-            console.log(str)
+            // console.log(str)
             fs.writeFile(routerConfig, str, function (err) {
               fse.remove(rootWorkDir + 'clone').then((e)=>{
                 console.log(e)

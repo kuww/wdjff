@@ -9,7 +9,14 @@ export default {
   ],
 }
 ```
+options:{
+cloneUrl//克隆的地址     必有项
 
+routerUrl//一级路由     必有项
+
+branch//分支名         默认master
+
+}
 ## Options
 
 TODO
