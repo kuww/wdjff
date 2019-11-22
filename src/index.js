@@ -213,7 +213,7 @@ var adds = async function (src, routerUrl,branch="master") {
           try {
             var stat = fs.statSync(src + '/' + item + '/src');
             if (stat.isDirectory()) {
-              if(item.indexOf('Detail')>-1){
+              if (item.indexOf('Detail') > -1) {
                 str += `    {
                 path: '/${routerUrl ? routerUrl : 'block'}/${item}/:id',
                 component: Loadable({
@@ -221,7 +221,7 @@ var adds = async function (src, routerUrl,branch="master") {
                   loading: LazyLoadComponent,
                 }),
               },\n`
-              }else{
+              } else {
                 str += `    {
                 path: '/${routerUrl ? routerUrl : 'block'}/${item}',
                 component: Loadable({
@@ -230,6 +230,7 @@ var adds = async function (src, routerUrl,branch="master") {
                 }),
               },\n`
               }
+            }
             } catch (e) {}
         })
         str += "\n]"
