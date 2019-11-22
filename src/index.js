@@ -115,46 +115,12 @@ function syncRunCommand(command, options, strict) {
     }
   }
 }
-
-
-
-
 var adds = async function (src, routerUrl,branch="master") {
-
-  // const dst = getPath('../test.js');
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   const dst = getPath('../../../src/pages');
-  console.log(dst,">>>>>>>>>>")
   const routerConfig = getPath('../../../src/spec_routes/block.js')
   const allrouterConfig = getPath('../../../src/spec_routes/mainTab.js')
-
-  console.log(routerConfig,"<<<<<<<<<<<")
-
-
   fs.readFile(allrouterConfig, "utf8", function(err, data) {
     if(data.indexOf('block')>-1){
-
     }else{
       let strs = data;
       let arrs = strs.split('export default');
@@ -165,14 +131,7 @@ var adds = async function (src, routerUrl,branch="master") {
 
       });
     }
-
   })
-
-
-
-
-
-
   if (src.indexOf('http') === 0) {
     const dirForCloneResource = `${rootWorkDir}clone`;
     console.log(`dirForCloneResource = ${dirForCloneResource}`);
@@ -193,38 +152,34 @@ var adds = async function (src, routerUrl,branch="master") {
             str = str + "export default[\n"
             paths.forEach(function (item) {
               if(item!=='.git'){
-              // fs.access(rootWorkDir+'clone'+flagSign+title+flagSign + item+ flagSign+ 'src', (err) => {
-              //   //需要判断block块里面是否有src目录 如果不存在这个目录 默认是不进行这个文件夹的导入的也就是和这个block的导入的
-              //   if (!err) {
-              //     fs.mkdirSync(dst + '/block/' + item)
-              //     fse.copySync(rootWorkDir+'clone'+flagSign+title+flagSign + item+ flagSign+ 'src', dst + '/block/' + item) //copy
-              //                       str += `    {
-              //   path: '/${routerUrl ? routerUrl : 'block'}/${item}',
-              //   component: Loadable({
-              //     loader: () => import('@/pages/block/${item}'),
-              //     loading: LazyLoadComponent,
-              //   }),
-              // },\n`
-              //   }
-              // });
               try {
                 var stat = fs.statSync(rootWorkDir+'clone'+flagSign+title+flagSign + item+ flagSign+ 'src');
                 if (stat.isDirectory()) {
                                     fs.mkdirSync(dst + '/block/' + item)
                   fse.copySync(rootWorkDir+'clone'+flagSign+title+flagSign + item+ flagSign+ 'src', dst + '/block/' + item) //copy
-                                    str += `    {
+                  if(item.indexOf('Detail')>-1){
+                    str += `    {
+                path: '/${routerUrl ? routerUrl : 'block'}/${item}/:id',
+                component: Loadable({
+                  loader: () => import('@/pages/block/${item}'),
+                  loading: LazyLoadComponent,
+                }),
+              },\n`
+                  }else{
+                    str += `    {
                 path: '/${routerUrl ? routerUrl : 'block'}/${item}',
                 component: Loadable({
                   loader: () => import('@/pages/block/${item}'),
                   loading: LazyLoadComponent,
                 }),
               },\n`
+                  }
+
                 }
               } catch (e) {}
             }
             });
             str += "\n];"
-            // console.log(str)
             fs.writeFile(routerConfig, str, function (err) {
               fse.remove(rootWorkDir + 'clone').then((e)=>{
                 console.log(e)
@@ -258,13 +213,22 @@ var adds = async function (src, routerUrl,branch="master") {
           try {
             var stat = fs.statSync(src + '/' + item + '/src');
             if (stat.isDirectory()) {
-              str += `    {
-          path: '/${routerUrl ? routerUrl : 'block'}/${item}',
-          component: Loadable({
-            loader: () => import('@/pages/block/${item}'),
-            loading: LazyLoadComponent,
-          }),
-        },\n`
+              if(item.indexOf('Detail')>-1){
+                str += `    {
+                path: '/${routerUrl ? routerUrl : 'block'}/${item}/:id',
+                component: Loadable({
+                  loader: () => import('@/pages/block/${item}'),
+                  loading: LazyLoadComponent,
+                }),
+              },\n`
+              }else{
+                str += `    {
+                path: '/${routerUrl ? routerUrl : 'block'}/${item}',
+                component: Loadable({
+                  loader: () => import('@/pages/block/${item}'),
+                  loading: LazyLoadComponent,
+                }),
+              },\n`
               }
             } catch (e) {}
         })
