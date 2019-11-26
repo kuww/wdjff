@@ -143,6 +143,10 @@ var adds = async function (src, routerUrl,branch="master",company) {
 
         let arr = src.split('/');
         let title = arr[arr.length - 1]; //  拿到block 文件夹 默认为路由的第一级
+        if(title.indexOf('.')>-1){
+          let brr = title.split('.');
+          title =brr[0];
+        }
         let cloneSrc = company?rootWorkDir + 'clone' + flagSign + title+flagSign+company:rootWorkDir + 'clone' + flagSign + title;
         let paths = fs.readdirSync(cloneSrc); //同步读取当前目录
         fse.remove(dst + flagSign + 'block').then(() => { // 删除本地的block文件夹
