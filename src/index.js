@@ -115,7 +115,7 @@ function syncRunCommand(command, options, strict) {
     }
   }
 }
-var adds = async function (src, routerUrl,branch="master") {
+var adds = async function (src, routerUrl,branch="master",company) {
   const dst = getPath('../../../src/pages');
   const routerConfig = getPath('../../../src/spec_routes/block.js')
   const allrouterConfig = getPath('../../../src/spec_routes/mainTab.js')
@@ -143,7 +143,8 @@ var adds = async function (src, routerUrl,branch="master") {
 
         let arr = src.split('/');
         let title = arr[arr.length - 1]; //  拿到block 文件夹 默认为路由的第一级
-        let paths = fs.readdirSync(rootWorkDir + 'clone' + flagSign + title); //同步读取当前目录
+        let cloneSrc = company?rootWorkDir + 'clone' + flagSign + title+flagSign+company:rootWorkDir + 'clone' + flagSign + title;
+        let paths = fs.readdirSync(cloneSrc); //同步读取当前目录
         fse.remove(dst + flagSign + 'block').then(() => { // 删除本地的block文件夹
           fse.mkdir(dst + flagSign + 'block').then(() => { // 创建本地的block文件夹
             let str = "import React from 'react'\n"
@@ -153,10 +154,10 @@ var adds = async function (src, routerUrl,branch="master") {
             paths.forEach(function (item) {
               if(item!=='.git'){
               try {
-                var stat = fs.statSync(rootWorkDir+'clone'+flagSign+title+flagSign + item+ flagSign+ 'src');
+                var stat = fs.statSync(cloneSrc+flagSign + item+ flagSign+ 'src');
                 if (stat.isDirectory()) {
-                                    fs.mkdirSync(dst + '/block/' + item)
-                  fse.copySync(rootWorkDir+'clone'+flagSign+title+flagSign + item+ flagSign+ 'src', dst + '/block/' + item) //copy
+                                    fs.mkdirSync(dst+flagSign + 'block'+flagSign + item)
+                  fse.copySync(cloneSrc+flagSign + item+ flagSign+ 'src', dst +flagSign+ 'block'+flagSign + item) //copy
                   if(item.indexOf('Detail')>-1){
                     str += `    {
                 path: '/${routerUrl ? routerUrl : 'block'}/${item}/:id',
@@ -247,6 +248,6 @@ var adds = async function (src, routerUrl,branch="master") {
 export default (in_api, in_opts = {}) => {
   let { api, opts } = defaultPluginCore(in_api, in_opts);
   if(opts.cloneUrl){
-    adds(opts.cloneUrl,opts.routerUrl,opts.branch)
+    adds(opts.cloneUrl,opts.routerUrl,opts.branch,opts.company)
   }
 };
