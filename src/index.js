@@ -132,7 +132,7 @@ var adds = async function (src, routerUrl,branch="master",company) {
       });
     }
   })
-  if (src.indexOf('http') === 0) {
+  if (src.indexOf('http') === 0||src.indexOf('git@git') === 0) {
     const dirForCloneResource = `${rootWorkDir}clone`;
     console.log(`dirForCloneResource = ${dirForCloneResource}`);
     fse.remove(dirForCloneResource).then(() => { // 删除本地的clone文件夹
